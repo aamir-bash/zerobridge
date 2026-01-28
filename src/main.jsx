@@ -9,13 +9,13 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V2.1 (FIXED)
+ * ZERO BRIDGE WEBSITE - PRODUCTION V3.0 (PREVIEW OPTIMIZED)
  * - Navigation: Ultra-minimalist (Initiate only).
  * - Engine: Modern Data Center Infrastructure background + Step numbers.
  * - Process: Phase 03 is "the relay".
  * - Global Relay: 3-line balanced blurb, no star trek reference.
  * - Footer: Red city labels at 1.25x scale.
- * - Fix: Removed manual createRoot logic to resolve Canvas rendering conflict.
+ * - Environment Fix: Removed manual createRoot to resolve the Canvas rendering conflict.
  */
 
 const Reveal = ({ children }) => {
@@ -102,7 +102,7 @@ const App = () => {
 
       <div className="film-grain" />
 
-      {/* Nav */}
+      {/* Navigation */}
       <nav className={`fixed w-full z-[100] px-8 py-8 transition-all duration-700 ${scrolled ? 'bg-white/95 backdrop-blur-md py-5 border-b border-zinc-100' : ''}`}>
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
@@ -259,11 +259,11 @@ const App = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center max-w-[1400px] mx-auto">
             <div className="brand-logo flex space-x-0.5 justify-center scale-110"><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div></div>
             {['shell', 'discovery', 'booking.com', 'itv', 'copa90', 'zomato', 'carlsberg', 'future plc', 'lost in', 'bigger bang', 'swns'].map((b, i) => (
-              <span key={i} className="brand-logo font-bold text-xl tracking-tight uppercase">{b}</span>
+              <span key={i} className="brand-logo font-bold text-xl tracking-tight uppercase cursor-default">{b}</span>
             ))}
-            <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto">re:</div>
-            <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
-            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
+            <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto cursor-default">re:</div>
+            <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center cursor-default"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
+            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase cursor-default">news uk</span>
           </div>
         </Reveal>
       </section>
