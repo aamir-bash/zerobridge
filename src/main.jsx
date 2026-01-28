@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -10,13 +9,13 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V2.1 (FINAL VERIFIED BUILD)
+ * ZERO BRIDGE WEBSITE - PRODUCTION V2.1 (FIXED)
  * - Navigation: Ultra-minimalist (Initiate only).
  * - Engine: Modern Data Center Infrastructure background + Step numbers.
  * - Process: Phase 03 is "the relay".
  * - Global Relay: 3-line balanced blurb, no star trek reference.
  * - Footer: Red city labels at 1.25x scale.
- * - Local Environment Fix: Full mounting logic restored.
+ * - Fix: Removed manual createRoot logic to resolve Canvas rendering conflict.
  */
 
 const Reveal = ({ children }) => {
@@ -300,12 +299,5 @@ const App = () => {
     </div>
   );
 };
-
-// --- MOUNTING BLOCK ---
-const container = document.getElementById('root');
-if (container) {
-  const root = createRoot(container);
-  root.render(<App />);
-}
 
 export default App;
