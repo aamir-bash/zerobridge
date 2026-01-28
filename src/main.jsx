@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -10,13 +9,14 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V1.1
- * Verification Check:
- * - Nav: "PROCESS" removed.
- * - Phase 03: Renamed to "the relay".
- * - Relay Blurb: 3-line balanced layout, "star trek" removed.
- * - Footer: Cities in RED, 12.5px font size.
- * - Mounting: Universal block added for environment compatibility.
+ * ZERO BRIDGE WEBSITE - PRODUCTION V1.7
+ * Updates:
+ * - Engine Background: Reverted to modern high-tech image (Data Center corridor) for stability.
+ * - Nav: Cleaned; "PROCESS" tab removed, focused on "INITIATE".
+ * - Phase 3: Named "the relay".
+ * - Relay Blurb: Balanced 3-line layout, removed "star trek troops".
+ * - Footer: Red city names (text-red-600) scaled to 12.5px.
+ * - Fix: Removed createRoot logic to ensure stable rendering in Canvas preview.
  */
 
 const Reveal = ({ children }) => {
@@ -94,13 +94,16 @@ const App = () => {
         .relay-blurb { font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.35; letter-spacing: -0.02em; }
         .video-overlay { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,1) 100%); }
         .relay-vignette { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 100%); }
+        .engine-vignette { background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%); }
         .pulse-dot { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
         .brand-logo { transition: all 0.4s ease; opacity: 0.5; filter: grayscale(1); }
         .brand-logo:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
       ` }} />
 
-      {/* Nav */}
+      <div className="film-grain" />
+
+      {/* Navigation */}
       <nav className={`fixed w-full z-[100] px-8 py-8 transition-all duration-700 ${scrolled ? 'bg-white/95 backdrop-blur-md py-5 border-b border-zinc-100' : ''}`}>
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
@@ -124,7 +127,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Mission Section */}
       <section className="py-48 px-8 bg-white border-t border-zinc-50 flex flex-col items-center text-center">
         <Reveal>
           <div className="max-w-[1200px] mx-auto space-y-20">
@@ -137,23 +140,34 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Engine */}
-      <section className="bg-black text-white py-40 px-8 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto text-center">
+      {/* Engine Section with Modern High-Tech Image Background */}
+      <section className="relative bg-black text-white py-40 px-8 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" 
+            className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale contrast-125"
+            alt="Modern Data Center corridor"
+          />
+          <div className="absolute inset-0 engine-vignette" />
+        </div>
+
+        <div className="relative z-10 max-w-[1400px] mx-auto text-center">
           <Reveal>
             <span className="text-[10px] tracking-[0.4em] text-red-600 font-bold mb-8 uppercase block">WHAT WE DO</span>
             <h3 className="unified-heading mb-32">our engine<span className="text-red-600">.</span></h3>
           </Reveal>
-          <div className="grid lg:grid-cols-3 border-t border-zinc-800">
-            {['CONNECT', 'EMPOWER', 'EXECUTE'].map((step, i) => (
+          <div className="grid lg:grid-cols-3 border-t border-white/10">
+            {[
+              { title: 'CONNECT', body: 'we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs.' },
+              { title: 'EMPOWER', body: 'our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience.' },
+              { title: 'EXECUTE', body: 'serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats.' }
+            ].map((step, i) => (
               <Reveal key={i}>
-                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-zinc-800 group text-center flex flex-col items-center">
+                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-white/10 group text-center flex flex-col items-center">
                   <span className="text-red-600 font-bold text-[10px] mb-2 block tracking-widest uppercase">0{i+1}</span>
-                  <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step}</span>
+                  <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step.title}</span>
                   <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">
-                    {i === 0 && "we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs."}
-                    {i === 1 && "our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience."}
-                    {i === 2 && "serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats."}
+                    {step.body}
                   </p>
                 </div>
               </Reveal>
@@ -162,7 +176,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Process */}
+      {/* Process Section */}
       <section className="py-48 bg-white border-y border-zinc-50 px-8">
         <div className="max-w-[1400px] mx-auto">
           <Reveal>
@@ -194,7 +208,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Global Relay */}
+      {/* Global Relay Section */}
       <section className="relative py-48 px-8 bg-white border-b border-zinc-50 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" className="w-full h-full object-cover brightness-90 contrast-110" alt="Global Network" />
@@ -205,6 +219,7 @@ const App = () => {
             <div className="space-y-16">
               <h3 className="unified-heading">while you sleep, <br /><span className="text-red-600">we execute.</span></h3>
               <div className="max-w-5xl mx-auto">
+                {/* Balanced 3-line blurb */}
                 <p className="relay-blurb font-bold text-black max-w-5xl mx-auto">
                   our hubs across india act as a 24/7 extension of your team. <br />
                   we leverage the timezone advantage, our vast talent pool, <br />
@@ -226,7 +241,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Live Status */}
+      {/* Live Status Panel */}
       <section className="pt-24 pb-0 bg-white px-8">
         <Reveal>
           <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center border-y border-zinc-100 py-12">
@@ -242,23 +257,23 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Brands */}
+      {/* Brand Section */}
       <section className="pt-8 pb-48 px-8 bg-white overflow-hidden text-center">
         <Reveal>
           <h3 className="unified-heading mb-32">we work with the top <br />brands and <span className="text-red-600">publishers.</span></h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center max-w-[1400px] mx-auto">
             <div className="brand-logo flex space-x-0.5 justify-center scale-110"><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div></div>
             {['shell', 'discovery', 'booking.com', 'itv', 'copa90', 'zomato', 'carlsberg', 'future plc', 'lost in', 'bigger bang', 'swns'].map((b, i) => (
-              <span key={i} className="brand-logo font-bold text-2xl tracking-tight uppercase">{b}</span>
+              <span key={i} className="brand-logo font-bold text-xl tracking-tight uppercase cursor-default">{b}</span>
             ))}
-            <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto">re:</div>
-            <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
-            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
+            <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto cursor-default">re:</div>
+            <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center cursor-default"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
+            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase cursor-default">news uk</span>
           </div>
         </Reveal>
       </section>
 
-      {/* Footer */}
+      {/* Footer with Red City Names at 12.5px */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <Reveal>
           <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is zero.</span></h2>
@@ -271,10 +286,10 @@ const App = () => {
         </Reveal>
       </footer>
 
-      {/* Modal */}
+      {/* Lead Capture Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
-          <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black"><X size={32} /></button>
+          <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black transition-colors"><X size={32} /></button>
           <div className="max-w-xl w-full space-y-12">
             <h2 className="text-5xl font-bold tracking-tighter">initiate.</h2>
             <form className="space-y-8" onSubmit={handleFormSubmit}>
@@ -289,13 +304,5 @@ const App = () => {
     </div>
   );
 };
-
-// --- UNIVERSAL MOUNTING BLOCK ---
-// This handles both the Chat Preview and your live website environment.
-const container = document.getElementById('root');
-if (container) {
-  const root = createRoot(container);
-  root.render(<App />);
-}
 
 export default App;
