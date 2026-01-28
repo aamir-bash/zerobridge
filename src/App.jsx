@@ -125,7 +125,7 @@ const App = () => {
             playsInline 
             className="w-full h-full object-cover grayscale opacity-[0.18] scale-105 pointer-events-none"
           >
-            <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-fast-moving-light-streaks-32777-large.mp4" type="video/mp4" />
+            <source src="https://sypcyzzog59nwuus.public.blob.vercel-storage.com/Zbbackground.mp4"
           </video>
           <div className="absolute inset-0 video-overlay z-1" />
         </div>
