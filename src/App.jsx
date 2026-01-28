@@ -10,6 +10,7 @@ import {
  * - Removed all remaining italics and serif fonts from brand wall
  * - Strictly unified header sizes for all section titles
  * - Maintained ALL CAPS for UI/Nav elements only
+ * - Video Source updated to bypass Vercel Blob limits
  */
 
 const App = () => {
@@ -108,7 +109,8 @@ const App = () => {
       <section className="relative h-screen flex flex-col justify-center items-center px-6 pt-40 md:pt-48 overflow-hidden">
         <div className="absolute inset-0 z-0 overflow-hidden">
           <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-[0.85] scale-100 pointer-events-none">
-            <source src="https://sypcyzzog59nwuus.public.blob.vercel-storage.com/Parachute%20jump%20group%20%281%29.mp4" type="video/mp4" />
+            {/* Switched to a robust CDN source to bypass Vercel Blob limits */}
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-flying-over-a-snowy-mountain-range-4311-large.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 video-mask z-1" />
         </div>
@@ -207,7 +209,7 @@ const App = () => {
               <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs">b</div>
               <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs">c</div>
             </div>
-            <span className="font-bold text-red-600 text-3xl">shell</span>
+            <span className="font-bold text-red-600 text-4xl">shell</span>
             <span className="font-bold text-2xl tracking-tighter">discovery</span>
             <span className="font-bold text-xl tracking-tighter text-blue-600">booking.com</span>
             <span className="font-bold text-4xl tracking-tighter text-nowrap">itv</span>
