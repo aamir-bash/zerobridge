@@ -1,43 +1,44 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION BUILD
- * Refinements: 
- * - Video Source: Updated to new CDN link (https://cdn.jsdelivr.net/gh/aamir-bash/assets/hero.mp4)
- * - Autoplay Logic: Refined useEffect to ensure playback on all modern browsers.
- * - Design: Strictly following the architectural lowercase mandate and unified header scale.
+ * ZERO BRIDGE OFFICIAL WEBSITE
+ * Structure:
+ * - Hero: High-velocity video background (CDN).
+ * - Section 1: Mission & Scaling.
+ * - Section 2: Operational Engine (Process).
+ * - Section 3: Global Infrastructure.
+ * - Section 4: Brand Credibility.
+ * - Interaction: Lead capture modal for business inquiries.
  */
 
-const App = () => {
+const ZeroBridgeWebsite = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const videoRef = useRef(null);
 
+  // Scroll logic for sticky header
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Force Video Playback on mount
+  // Ensure video background plays immediately and stays muted
   useEffect(() => {
-    const attemptPlay = () => {
+    const startVideo = () => {
       if (videoRef.current) {
         videoRef.current.muted = true;
-        videoRef.current.play().catch(error => {
-          console.log("Autoplay waiting for interaction:", error);
-        });
+        videoRef.current.play().catch(err => console.log("Video playback waiting for user..."));
       }
     };
-
-    attemptPlay();
-    // Re-attempt after a short delay to ensure DOM readiness
-    const timeout = setTimeout(attemptPlay, 1000);
-    return () => clearTimeout(timeout);
+    startVideo();
+    const timer = setTimeout(startVideo, 500);
+    return () => clearTimeout(timer);
   }, []);
 
   const scrollToSection = (id) => {
@@ -52,6 +53,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white antialiased lowercase">
+      {/* Visual Identity System */}
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
         
@@ -74,21 +76,27 @@ const App = () => {
           letter-spacing: -0.02em;
         }
 
-        .video-mask {
-          background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 60%, rgba(255,255,255,1) 100%);
+        .video-overlay {
+          background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,1) 100%);
         }
 
-        .grain::after {
+        .film-grain::after {
           content: "";
           position: fixed; top: -150%; left: -150%; width: 300%; height: 300%;
           background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_filmgrain.png");
-          opacity: 0.02; pointer-events: none; animation: grain 8s steps(10) infinite; z-index: 50;
+          opacity: 0.015; pointer-events: none; animation: grain 8s steps(10) infinite; z-index: 50;
+        }
+
+        @keyframes grain {
+          0%, 100% { transform: translate(0, 0); }
+          10% { transform: translate(-5%, -10%); }
+          50% { transform: translate(-15%, 10%); }
         }
       ` }} />
 
-      <div className="grain" />
+      <div className="film-grain" />
 
-      {/* Nav */}
+      {/* Navigation Bar */}
       <nav className={`fixed w-full z-[100] px-8 py-8 transition-all duration-700 ${scrolled ? 'bg-white/95 backdrop-blur-md py-5 border-b border-zinc-100' : ''}`}>
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
@@ -108,9 +116,9 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Hero Section with Video */}
+      {/* Hero: Background Video Section */}
       <section className="relative h-screen flex flex-col justify-center items-center px-6 pt-40 md:pt-48 overflow-hidden">
-        <div className="absolute inset-0 z-0 overflow-hidden bg-zinc-100">
+        <div className="absolute inset-0 z-0 overflow-hidden bg-white">
           <video 
             ref={videoRef}
             autoPlay 
@@ -118,12 +126,10 @@ const App = () => {
             loop 
             playsInline 
             className="w-full h-full object-cover opacity-[0.9] scale-100 pointer-events-none"
-            poster="https://cdn.jsdelivr.net/gh/aamir-bash/assets/hero.mp4"
           >
             <source src="https://cdn.jsdelivr.net/gh/aamir-bash/assets/hero.mp4" type="video/mp4" />
-            your browser does not support the video tag.
           </video>
-          <div className="absolute inset-0 video-mask z-1" />
+          <div className="absolute inset-0 video-overlay z-1" />
         </div>
 
         <div className="relative z-10 text-center max-w-[95vw]">
@@ -135,7 +141,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Mission */}
+      {/* Branding & Mission */}
       <section className="py-48 md:py-72 px-8 bg-white border-t border-zinc-50 flex flex-col items-center justify-center text-center">
         <div className="max-w-[1200px] mx-auto space-y-16">
           <h2 className="unified-heading">
@@ -152,7 +158,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Engine Section */}
+      {/* Core Operational Engine */}
       <section id="process" className="bg-black text-white py-40 md:py-64 px-8 overflow-hidden">
         <div className="max-w-[1400px] mx-auto text-center">
           <span className="text-[10px] tracking-[0.4em] text-red-600 font-bold mb-8 uppercase block">WHAT WE DO</span>
@@ -180,7 +186,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Global Relay */}
+      {/* Infrastructure Metrics */}
       <section className="py-48 px-8 bg-white border-b border-zinc-50 text-center">
         <h3 className="unified-heading mb-16">
           while you sleep, <br />
@@ -189,7 +195,7 @@ const App = () => {
         <p className="standard-body font-bold text-zinc-400 max-w-4xl mx-auto mb-32">
           our hubs in india act as a 24/7 extension of your team.
         </p>
-        <div className="grid grid-cols-2 gap-12 mt-32 max-w-2xl mx-auto text-center">
+        <div className="grid grid-cols-2 gap-12 max-w-2xl mx-auto">
           <div className="flex flex-col items-center p-12 border border-zinc-100 rounded-[40px] flex-1">
             <span className="text-7xl font-bold mb-2 tracking-tighter">24/7</span>
             <span className="text-[10px] tracking-[0.4em] text-zinc-400 font-bold uppercase">UPTIME</span>
@@ -201,7 +207,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Website Footer */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <h2 className="unified-heading mb-20">the bridge <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is open.</span></h2>
         <button 
@@ -218,9 +224,9 @@ const App = () => {
         </div>
       </footer>
 
-      {/* Initiate Modal */}
+      {/* Inquiry Form Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl transition-all duration-500">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
           <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black transition-colors">
             <X size={32} />
           </button>
@@ -245,4 +251,9 @@ const App = () => {
   );
 };
 
-export default App;
+// Website Mounting Point
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<ZeroBridgeWebsite />);
+
+export default ZeroBridgeWebsite;
