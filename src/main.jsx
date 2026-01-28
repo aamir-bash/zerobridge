@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X
@@ -7,9 +8,9 @@ import {
 /**
  * ZERO BRIDGE WEBSITE - PRODUCTION BUILD
  * Updates:
- * - Brand Headline: Unified with site-wide 'unified-heading' class for visual consistency.
- * - Spacing: Refined padding around the brand wall for better flow.
- * - Maintained: Scroll reveals, global pulse clock, and V11:55 content refinements.
+ * - Fixed rendering: Added createRoot mounting logic to ensure the site opens.
+ * - Brand Headline: Unified with site-wide 'unified-heading' class.
+ * - Maintained: Scroll reveals, global pulse clock, and V11:55 refinements.
  */
 
 // Animation Wrapper Component
@@ -428,5 +429,12 @@ const App = () => {
     </div>
   );
 };
+
+// MOUNTING LOGIC: Tells the browser to render the website into the root div
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(<App />);
+}
 
 export default App;
