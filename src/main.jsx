@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -9,11 +10,13 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - V12:50 AM
+ * ZERO BRIDGE WEBSITE - PRODUCTION BUILD (V12:55 AM)
  * Updates:
- * - Navigation: Removed "PROCESS" link; only "INITIATE" remains.
- * - Process Section: Renamed Phase 03 to "the relay".
- * - Architecture: Stable Reveal component and lowercase brand mandate.
+ * - Fixed Loading: Restored createRoot mounting logic for live website environments.
+ * - Navigation: Streamlined to "INITIATE" only.
+ * - Process Section: Phase 03 updated to "the relay".
+ * - Mission Section: Unified bold styling for both mission paragraphs.
+ * - Infrastructure: Combined "Star Trek troops" blurb with 15% larger font size.
  */
 
 // Animation Wrapper Component
@@ -302,7 +305,7 @@ const App = () => {
               </div>
               <div className="flex flex-col items-center p-8 border border-zinc-100 rounded-[30px] bg-white/80 backdrop-blur-xl transition-transform hover:scale-105 duration-500">
                 <span className="text-4xl font-bold mb-1 tracking-tighter">365</span>
-                <span className="text-[8px] tracking-[0.4em] text-zinc-400 font-bold uppercase">DAYS A YEAR</span>
+                <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">DAYS A YEAR</span>
               </div>
             </div>
           </Reveal>
@@ -386,5 +389,12 @@ const App = () => {
     </div>
   );
 };
+
+// MOUNTING LOGIC: RESTORED FOR LIVE WEBSITE ENVIRONMENTS
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(<App />);
+}
 
 export default App;
