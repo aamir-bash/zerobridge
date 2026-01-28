@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -10,13 +9,12 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION BUILD (V12:55 AM)
+ * ZERO BRIDGE WEBSITE - PRODUCTION BUILD
  * Updates:
- * - Fixed Loading: Restored createRoot mounting logic for live website environments.
- * - Navigation: Streamlined to "INITIATE" only.
- * - Process Section: Phase 03 updated to "the relay".
- * - Mission Section: Unified bold styling for both mission paragraphs.
- * - Infrastructure: Combined "Star Trek troops" blurb with 15% larger font size.
+ * - Footer: Changed city names to red (text-red-600) and maintained 25% scale increase.
+ * - Global Relay: Balanced blurb across three lines; removed "star trek troops".
+ * - Spacing: Minimized vertical gap between Clock and Brands.
+ * - Architecture: Intersection Observer reveals and lowercase brand mandate.
  */
 
 // Animation Wrapper Component
@@ -86,6 +84,16 @@ const App = () => {
     const subject = `Inquiry: ${formData.name}`;
     const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AQuery: ${formData.query}`;
     window.location.href = `mailto:aamir@zerobridge.net?subject=${subject}&body=${body}`;
+  };
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -285,10 +293,11 @@ const App = () => {
           <Reveal>
             <div className="space-y-16">
               <h3 className="unified-heading">while you sleep, <br /><span className="text-red-600">we execute.</span></h3>
-              <div className="max-w-4xl mx-auto">
-                <p className="relay-blurb font-bold text-black max-w-4xl mx-auto">
-                  our hubs across india act as a 24/7 extension of your team. your star trek troops. <br className="hidden md:block" />
-                  we leverage the timezone advantage, our vast talent pool, technology and tools for a seamless, agile workflow.
+              <div className="max-w-5xl mx-auto">
+                <p className="relay-blurb font-bold text-black max-w-5xl mx-auto">
+                  our hubs across india act as a 24/7 extension of your team. <br />
+                  we leverage the timezone advantage, our vast talent pool, <br />
+                  technology and tools for a seamless, agile workflow.
                 </p>
               </div>
             </div>
@@ -301,7 +310,7 @@ const App = () => {
               </div>
               <div className="flex flex-col items-center p-8 border border-zinc-100 rounded-[30px] bg-white/80 backdrop-blur-xl transition-transform hover:scale-105 duration-500">
                 <span className="text-4xl font-bold mb-1 tracking-tighter">60%</span>
-                <span className="text-[8px] tracking-[0.4em] text-zinc-400 font-bold uppercase">COST SAVING</span>
+                <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">COST SAVING</span>
               </div>
               <div className="flex flex-col items-center p-8 border border-zinc-100 rounded-[30px] bg-white/80 backdrop-blur-xl transition-transform hover:scale-105 duration-500">
                 <span className="text-4xl font-bold mb-1 tracking-tighter">365</span>
@@ -360,14 +369,18 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Footer */}
+      {/* Footer: City name fonts set to red (text-red-600) */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <Reveal>
           <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is zero.</span></h2>
           <button onClick={() => setIsModalOpen(true)} className="group flex items-center space-x-6 mx-auto text-[10px] tracking-[0.6em] font-bold border border-zinc-800 px-16 py-8 rounded-full hover:bg-white hover:text-black transition-all uppercase">
             <span>INITIATE SIGNAL</span><ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
           </button>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-48 text-[10px] tracking-[0.5em] text-zinc-600 font-bold uppercase"><span>BANGALORE HQ</span><span>DELHI NCR</span><span>LOS ANGELES</span></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-48 text-[12.5px] tracking-[0.5em] text-red-600 font-bold uppercase">
+            <span>BANGALORE HQ</span>
+            <span>DELHI NCR</span>
+            <span>LOS ANGELES</span>
+          </div>
         </Reveal>
       </footer>
 
@@ -389,12 +402,5 @@ const App = () => {
     </div>
   );
 };
-
-// MOUNTING LOGIC: RESTORED FOR LIVE WEBSITE ENVIRONMENTS
-const container = document.getElementById('root');
-if (container) {
-  const root = createRoot(container);
-  root.render(<App />);
-}
 
 export default App;
