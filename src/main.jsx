@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -9,14 +10,13 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V1.9 (FINAL VERIFIED)
- * - Navigation: Initiate only.
- * - Engine: Modern infrastructure background + numbering.
+ * ZERO BRIDGE WEBSITE - PRODUCTION V2.1 (FINAL VERIFIED BUILD)
+ * - Navigation: Ultra-minimalist (Initiate only).
+ * - Engine: Modern Data Center Infrastructure background + Step numbers.
  * - Process: Phase 03 is "the relay".
- * - Global Relay: 3-line balanced blurb.
+ * - Global Relay: 3-line balanced blurb, no star trek reference.
  * - Footer: Red city labels at 1.25x scale.
- * - Lead Routing: aamir@zerobridge.net
- * - Environment Fix: Removed manual createRoot to prevent environment conflict.
+ * - Local Environment Fix: Full mounting logic restored.
  */
 
 const Reveal = ({ children }) => {
@@ -97,7 +97,7 @@ const App = () => {
         .engine-vignette { background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%); }
         .pulse-dot { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
-        .brand-logo { transition: all 0.4s ease; opacity: 0.5; filter: grayscale(1); }
+        .brand-logo { transition: all 0.4s ease; opacity: 0.5; filter: grayscale(1); cursor: default; }
         .brand-logo:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
       ` }} />
 
@@ -140,13 +140,13 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Engine */}
+      {/* Engine - Modern Tech Background */}
       <section className="relative bg-black text-white py-40 px-8 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img 
             src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" 
             className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale contrast-125"
-            alt="Modern Data Center"
+            alt="Infrastructure"
           />
           <div className="absolute inset-0 engine-vignette" />
         </div>
@@ -156,16 +156,16 @@ const App = () => {
             <h3 className="unified-heading mb-32">our engine<span className="text-red-600">.</span></h3>
           </Reveal>
           <div className="grid lg:grid-cols-3 border-t border-white/10">
-            {['CONNECT', 'EMPOWER', 'EXECUTE'].map((step, i) => (
+            {[
+              { label: 'CONNECT', text: 'we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs.' },
+              { label: 'EMPOWER', text: 'our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience.' },
+              { label: 'EXECUTE', text: 'serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats.' }
+            ].map((step, i) => (
               <Reveal key={i}>
                 <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-white/10 group text-center flex flex-col items-center">
                   <span className="text-red-600 font-bold text-[10px] mb-2 block tracking-widest uppercase">0{i+1}</span>
-                  <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step}</span>
-                  <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">
-                    {i === 0 && "we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs."}
-                    {i === 1 && "our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience."}
-                    {i === 2 && "serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats."}
-                  </p>
+                  <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step.label}</span>
+                  <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">{step.text}</p>
                 </div>
               </Reveal>
             ))}
@@ -205,7 +205,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Global Relay */}
+      {/* Global Relay - Balanced 3 lines */}
       <section className="relative py-48 px-8 bg-white border-b border-zinc-50 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" className="w-full h-full object-cover brightness-90 contrast-110" alt="Global Network" />
@@ -226,10 +226,10 @@ const App = () => {
           </Reveal>
           <Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32 max-w-4xl mx-auto text-center">
-              {[ {label: '24/7', sub: 'UPTIME'}, {label: '60%', sub: 'COST SAVING'}, {label: '365', sub: 'DAYS A YEAR'} ].map((m, i) => (
+              {[ {l: '24/7', s: 'UPTIME'}, {l: '60%', s: 'COST SAVING'}, {l: '365', s: 'DAYS A YEAR'} ].map((m, i) => (
                 <div key={i} className="flex flex-col items-center p-8 border border-zinc-100 rounded-[30px] bg-white/80 backdrop-blur-xl transition-transform hover:scale-105 duration-500">
-                  <span className="text-4xl font-bold mb-1 tracking-tighter">{m.label}</span>
-                  <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">{m.sub}</span>
+                  <span className="text-4xl font-bold mb-1 tracking-tighter">{m.l}</span>
+                  <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">{m.s}</span>
                 </div>
               ))}
             </div>
@@ -237,7 +237,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Live Status */}
+      {/* Status Panel */}
       <section className="pt-24 pb-0 bg-white px-8">
         <Reveal>
           <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center border-y border-zinc-100 py-12">
@@ -260,16 +260,16 @@ const App = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center max-w-[1400px] mx-auto">
             <div className="brand-logo flex space-x-0.5 justify-center scale-110"><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div></div>
             {['shell', 'discovery', 'booking.com', 'itv', 'copa90', 'zomato', 'carlsberg', 'future plc', 'lost in', 'bigger bang', 'swns'].map((b, i) => (
-              <span key={i} className="brand-logo font-bold text-2xl tracking-tight uppercase cursor-default">{b}</span>
+              <span key={i} className="brand-logo font-bold text-xl tracking-tight uppercase">{b}</span>
             ))}
             <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto">re:</div>
             <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
-            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase cursor-default">news uk</span>
+            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
           </div>
         </Reveal>
       </section>
 
-      {/* Footer - Final Red Accents */}
+      {/* Footer - Red Cities at 12.5px */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <Reveal>
           <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is zero.</span></h2>
@@ -282,7 +282,7 @@ const App = () => {
         </Reveal>
       </footer>
 
-      {/* Modal */}
+      {/* Form Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
           <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black"><X size={32} /></button>
@@ -300,5 +300,12 @@ const App = () => {
     </div>
   );
 };
+
+// --- MOUNTING BLOCK ---
+const container = document.getElementById('root');
+if (container) {
+  const root = createRoot(container);
+  root.render(<App />);
+}
 
 export default App;
