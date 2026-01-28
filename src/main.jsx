@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
@@ -9,13 +10,13 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V3.0 (PREVIEW OPTIMIZED)
- * - Navigation: Ultra-minimalist (Initiate only).
- * - Engine: Modern Data Center Infrastructure background + Step numbers.
- * - Process: Phase 03 is "the relay".
- * - Global Relay: 3-line balanced blurb, no star trek reference.
- * - Footer: Red city labels at 1.25x scale.
- * - Environment Fix: Removed manual createRoot to resolve the Canvas rendering conflict.
+ * ZERO BRIDGE WEBSITE - PRODUCTION V4.0 (STABLE BUILD)
+ * - Engine: Reverted to solid black layout (removed background image).
+ * - Navigation: Ultra-minimalist (Only "INITIATE").
+ * - Phase 03: Named "the relay".
+ * - Global Relay: 3-line balanced layout for architectural symmetry.
+ * - Footer: Red city labels at 12.5px scale.
+ * - Mounting: Safe-mount logic for GitHub/Vercel compatibility.
  */
 
 const Reveal = ({ children }) => {
@@ -93,7 +94,6 @@ const App = () => {
         .relay-blurb { font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.35; letter-spacing: -0.02em; }
         .video-overlay { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,1) 100%); }
         .relay-vignette { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 100%); }
-        .engine-vignette { background: linear-gradient(to bottom, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.95) 100%); }
         .pulse-dot { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
         .brand-logo { transition: all 0.4s ease; opacity: 0.5; filter: grayscale(1); cursor: default; }
@@ -139,29 +139,21 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Engine - Modern Tech Background */}
-      <section className="relative bg-black text-white py-40 px-8 overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" 
-            className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale contrast-125"
-            alt="Infrastructure"
-          />
-          <div className="absolute inset-0 engine-vignette" />
-        </div>
-        <div className="relative z-10 max-w-[1400px] mx-auto text-center">
+      {/* Engine - Clean Black Reverted Layout */}
+      <section className="bg-black text-white py-40 px-8 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto text-center">
           <Reveal>
             <span className="text-[10px] tracking-[0.4em] text-red-600 font-bold mb-8 uppercase block">WHAT WE DO</span>
             <h3 className="unified-heading mb-32">our engine<span className="text-red-600">.</span></h3>
           </Reveal>
-          <div className="grid lg:grid-cols-3 border-t border-white/10">
+          <div className="grid lg:grid-cols-3 border-t border-zinc-800">
             {[
               { label: 'CONNECT', text: 'we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs.' },
               { label: 'EMPOWER', text: 'our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience.' },
               { label: 'EXECUTE', text: 'serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats.' }
             ].map((step, i) => (
               <Reveal key={i}>
-                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-white/10 group text-center flex flex-col items-center">
+                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-zinc-800 group text-center flex flex-col items-center">
                   <span className="text-red-600 font-bold text-[10px] mb-2 block tracking-widest uppercase">0{i+1}</span>
                   <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step.label}</span>
                   <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">{step.text}</p>
@@ -204,7 +196,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Global Relay - Balanced 3 lines */}
+      {/* Global Relay */}
       <section className="relative py-48 px-8 bg-white border-b border-zinc-50 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" className="w-full h-full object-cover brightness-90 contrast-110" alt="Global Network" />
@@ -236,7 +228,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Status Panel */}
+      {/* Live Status */}
       <section className="pt-24 pb-0 bg-white px-8">
         <Reveal>
           <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center border-y border-zinc-100 py-12">
@@ -252,7 +244,7 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Brands */}
+      {/* Brand Section */}
       <section className="pt-8 pb-48 px-8 bg-white overflow-hidden text-center">
         <Reveal>
           <h3 className="unified-heading mb-32">we work with the top <br />brands and <span className="text-red-600">publishers.</span></h3>
@@ -268,7 +260,7 @@ const App = () => {
         </Reveal>
       </section>
 
-      {/* Footer - Red Cities at 12.5px */}
+      {/* Footer - Final Red Accents */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <Reveal>
           <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is zero.</span></h2>
@@ -281,7 +273,7 @@ const App = () => {
         </Reveal>
       </footer>
 
-      {/* Form Modal */}
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
           <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black"><X size={32} /></button>
@@ -299,5 +291,15 @@ const App = () => {
     </div>
   );
 };
+
+// --- UNIVERSAL MOUNTING BLOCK ---
+// This handles both the Chat Preview and your live GitHub/Vercel website environment.
+if (typeof document !== 'undefined') {
+  const container = document.getElementById('root');
+  if (container && container.innerHTML === "") {
+    const root = createRoot(container);
+    root.render(<App />);
+  }
+}
 
 export default App;
