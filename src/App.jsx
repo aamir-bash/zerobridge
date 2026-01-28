@@ -2,16 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { 
   Menu, 
   X, 
-  ArrowRight,
-  Globe,
-  Zap,
-  Clock,
-  Check
+  ArrowRight, 
+  Globe, 
+  Zap, 
+  Clock, 
+  Check 
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE - V7 PRODUCTION BUILD
- * Final Refinements: Centered Mission, Redesigned Matrix, Brand Wall.
+ * ZERO BRIDGE - V10 PRODUCTION BUILD
+ * Refinements: 
+ * - Tagline in ALL CAPS
+ * - "Guaranteed" reverted to stroke style in black
+ * - Video color restored (Grayscale removed)
+ * - Matrix Layout & Center-aligned Messaging
  */
 
 const App = () => {
@@ -53,8 +57,8 @@ const App = () => {
         }
 
         .stroke-text {
-          -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
-          text-stroke: 1px rgba(0, 0, 0, 0.1);
+          -webkit-text-stroke: 1px rgba(0, 0, 0, 0.8);
+          text-stroke: 1px rgba(0, 0, 0, 0.8);
           color: transparent;
         }
 
@@ -67,8 +71,9 @@ const App = () => {
           animation: fadeInScale 1.2s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
+        /* Subtle mask to maintain text legibility while showing video color */
         .video-mask {
-          background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.92) 80%, rgba(255,255,255,1) 100%);
+          background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 60%, rgba(255,255,255,1) 100%);
         }
 
         .grain::after {
@@ -92,7 +97,7 @@ const App = () => {
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <span className="text-xl font-bold uppercase tracking-tighter">Zero Bridge<span className="text-red-600">.</span></span>
-            <span className="text-[10px] lowercase tracking-[0.3em] text-zinc-400 font-bold leading-none">global content infrastructure</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-bold leading-none text-nowrap">GLOBAL CONTENT INFRASTRUCTURE</span>
           </div>
 
           <div className="hidden md:flex items-center space-x-12">
@@ -104,19 +109,20 @@ const App = () => {
         </div>
       </nav>
 
-      {/* Hero Section - Increased pt to avoid overlap */}
+      {/* Hero Section */}
       <section className="relative h-screen flex flex-col justify-center items-center px-6 pt-40 md:pt-48">
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <video autoPlay muted loop playsInline className="w-full h-full object-cover grayscale opacity-[0.25] scale-105 pointer-events-none">
+          {/* Grayscale removed for true form color */}
+          <video autoPlay muted loop playsInline className="w-full h-full object-cover opacity-[0.85] scale-100 pointer-events-none">
             <source src="https://sypcyzzog59nwuus.public.blob.vercel-storage.com/Zbbackground.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 video-mask z-1" />
         </div>
 
         <div className="relative z-10 text-center animate-entrance">
-          <h1 className="text-[clamp(3.5rem,14vw,11rem)] font-bold tracking-tighter leading-[0.75] mb-12">
+          <h1 className="text-[clamp(3.5rem,14vw,11rem)] font-bold tracking-tighter leading-[0.75] mb-12 uppercase">
             CONTENT <br />
-            <span className="serif-italic text-zinc-800">Velocity.</span> <br />
+            <span className="serif-italic text-zinc-800 lowercase">Velocity.</span> <br />
             <span className="text-red-600">BUDGET</span> <br />
             <span className="stroke-text">Guaranteed.</span>
           </h1>
@@ -145,7 +151,7 @@ const App = () => {
       <section className="bg-black text-white py-40 md:py-64 px-8 overflow-hidden">
         <div className="max-w-[1400px] mx-auto">
           <div className="flex flex-col mb-32 items-center text-center">
-            <span className="text-[10px] uppercase tracking-[0.5em] text-red-600 font-bold mb-8 italic">What We Do</span>
+            <span className="text-lg md:text-2xl uppercase tracking-[0.4em] text-red-600 font-bold mb-8">What We Do</span>
             <h3 className="text-5xl md:text-[8rem] font-bold tracking-tighter leading-none uppercase">Our Engine<span className="text-red-600">.</span></h3>
           </div>
 
@@ -171,7 +177,7 @@ const App = () => {
           </div>
 
           <div className="mt-40 border-t border-zinc-800 pt-20 text-center">
-            <h4 className="text-3xl md:text-6xl font-bold tracking-tighter leading-[1] max-w-5xl mx-auto">
+            <h4 className="text-3xl md:text-6xl font-bold tracking-tighter leading-[1.1] max-w-5xl mx-auto">
               We have a follow-the-sun studio model designed to handle daily publishing schedules
             </h4>
           </div>
@@ -182,16 +188,16 @@ const App = () => {
       <section id="process" className="py-48 px-8 bg-white">
         <div className="max-w-[1400px] mx-auto text-center">
           <div className="space-y-16">
-            <h3 className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-[0.8]">
+            <h3 className="text-6xl md:text-[10rem] font-bold tracking-tighter leading-[0.8] uppercase">
               While you sleep, <br />
-              <span className="serif-italic text-red-600">we execute.</span>
+              <span className="serif-italic text-red-600 lowercase">we execute.</span>
             </h3>
             <p className="text-zinc-400 text-2xl md:text-5xl max-w-5xl mx-auto leading-tight font-bold tracking-tighter">
               Our hubs in India act as a 24/7 extension of your team.
             </p>
           </div>
           
-          <div className="grid grid-cols-2 gap-12 mt-32 max-w-2xl mx-auto">
+          <div className="grid grid-cols-2 gap-12 mt-32 max-w-2xl mx-auto text-center">
             <div className="flex flex-col items-center p-12 border border-zinc-100 rounded-[40px] flex-1">
               <span className="text-7xl font-bold mb-2 tracking-tighter">24/7</span>
               <span className="text-[10px] uppercase tracking-[0.4em] text-zinc-400 font-bold">Uptime</span>
@@ -204,36 +210,31 @@ const App = () => {
         </div>
       </section>
 
-      {/* BRAND WALL - Based on Screenshot */}
+      {/* BRAND WALL */}
       <section className="py-40 px-8 border-t border-zinc-100 bg-white">
         <div className="max-w-[1400px] mx-auto text-center">
-          <h3 className="text-[10px] uppercase tracking-[0.5em] text-red-600 font-bold mb-12">Who We Work With</h3>
+          <h3 className="text-lg md:text-2xl uppercase tracking-[0.4em] text-red-600 font-bold mb-24">Who We Work With</h3>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-20 gap-x-12 items-center opacity-60">
-            {/* Logo Grouping - Stylized to match Screenshot */}
-            <div className="flex flex-col items-center space-y-2">
-              <span className="font-bold text-red-600 text-2xl">Shell</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center opacity-70">
+            <div className="flex space-x-0.5 justify-center scale-125">
+              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs">B</div>
+              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs">B</div>
+              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs">C</div>
             </div>
-            <div className="flex space-x-0.5 font-black text-2xl tracking-tighter italic text-green-600">itv</div>
-            <div className="text-2xl font-bold text-blue-600 tracking-tight">Booking.com</div>
-            <div className="text-xl font-black tracking-widest text-zinc-800">COPA90</div>
-            <div className="text-2xl font-bold text-zinc-800 tracking-tighter">Discovery <span className="text-[10px] block font-light tracking-widest text-zinc-400 -mt-1 uppercase">Networks</span></div>
-            
-            <div className="flex space-x-0.5 justify-center">
-              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs border border-zinc-200">B</div>
-              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs border border-zinc-200">B</div>
-              <div className="w-7 h-7 bg-black text-white flex items-center justify-center font-bold text-xs border border-zinc-200">C</div>
-            </div>
-            <div className="text-xl font-bold italic tracking-tighter">News UK</div>
-            <div className="text-2xl font-black text-red-500 tracking-tighter">zomato</div>
-            <div className="text-2xl font-serif font-black italic text-green-900">Carlsberg</div>
-            <div className="text-xs font-bold tracking-[0.5em] uppercase">Future PLC</div>
-
-            <div className="text-2xl font-black tracking-tighter">LOST iN</div>
-            <div className="text-xl font-black uppercase tracking-tight">Bigger Bang</div>
-            <div className="text-4xl font-black text-red-600 italic tracking-tighter">SWNS</div>
-            <div className="border-2 border-black px-2 py-0.5 font-black text-lg">RE:</div>
-            <div className="flex items-center space-x-1 font-bold text-sm tracking-widest"><span>SBX</span><span className="w-px h-5 bg-zinc-300"></span><span>CARS</span></div>
+            <span className="font-bold text-red-600 text-4xl">Shell</span>
+            <span className="font-black text-3xl tracking-tighter italic">Discovery</span>
+            <span className="font-bold text-2xl tracking-tighter text-blue-600">Booking.com</span>
+            <span className="font-black text-4xl tracking-tighter italic text-nowrap">itv</span>
+            <span className="font-black text-2xl uppercase tracking-widest">COPA90</span>
+            <span className="font-black text-3xl tracking-tighter text-red-600 uppercase">ZOMATO</span>
+            <span className="font-serif font-black text-2xl italic text-green-900">Carlsberg</span>
+            <span className="font-bold text-xl uppercase tracking-[0.5em] text-nowrap">Future PLC</span>
+            <span className="font-black text-2xl uppercase tracking-tighter">LOST iN</span>
+            <span className="font-bold text-xl uppercase tracking-widest text-nowrap text-zinc-800">Bigger Bang</span>
+            <span className="font-black text-4xl text-red-600 tracking-tighter">SWNS</span>
+            <div className="border-2 border-black px-3 py-1 font-black text-xl">RE:</div>
+            <div className="flex items-center space-x-1 font-bold text-base tracking-widest uppercase"><span>SBX</span><span className="w-px h-6 bg-zinc-300"></span><span>CARS</span></div>
+            <span className="font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">NEWS UK</span>
           </div>
         </div>
       </section>
@@ -249,7 +250,7 @@ const App = () => {
             <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
           </button>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-48 text-[10px] uppercase tracking-[0.5em] text-zinc-600 font-bold">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pt-48 text-[10px] uppercase tracking-[0.5em] text-zinc-600 font-bold text-nowrap">
             <span>Bangalore HQ</span>
             <span>Delhi NCR</span>
             <span>Los Angeles</span>
