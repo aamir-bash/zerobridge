@@ -4,46 +4,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zero Bridge | Media Infrastructure</title>
+    
     <!-- Dynamic Red Dot Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23DC2626%22/></svg>" />
     
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Load React and Babel CDNs for standalone operation -->
+    <!-- Configure Tailwind to strictly use Inter (Matches the Screenshot) -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+          },
+        },
+      }
+    </script>
+    
+    <!-- Load React and Babel CDNs -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
       
+      * {
+        font-family: 'Inter', sans-serif !important;
+      }
+
       body { 
         margin: 0; 
         background-color: #FFFFFF; 
-        font-family: 'Space Grotesk', sans-serif; 
         overflow-x: hidden;
       }
       
+      /* Core Typography Classes - Matched to Screenshot V6.5 */
       .unified-heading { 
         font-size: clamp(3rem, 10vw, 8rem); 
-        font-weight: 700; 
-        line-height: 0.9; 
-        letter-spacing: -0.05em; 
+        font-weight: 800; 
+        line-height: 0.85; 
+        letter-spacing: -0.06em; 
       }
       
       .standard-body { 
         font-size: clamp(1.1rem, 2vw, 1.5rem); 
-        line-height: 1.4; 
-        letter-spacing: -0.02em; 
+        line-height: 1.3; 
+        letter-spacing: -0.03em; 
       }
       
       .relay-blurb { 
         font-size: clamp(1.3rem, 2.5vw, 1.9rem); 
-        line-height: 1.35; 
-        letter-spacing: -0.02em; 
+        line-height: 1.3; 
+        letter-spacing: -0.03em; 
       }
       
+      /* Visual Effects */
       .video-overlay { 
         background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,1) 100%); 
       }
@@ -86,51 +105,18 @@
     <script type="text/babel">
       const { useState, useEffect, useRef } = React;
 
-      // Inline SVG components for zero-dependency rendering
+      // Icons
       const ArrowRight = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
           <line x1="5" y1="12" x2="19" y2="12"></line>
           <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
       );
 
       const X = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
           <line x1="18" y1="6" x2="6" y2="18"></line>
           <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-      );
-
-      const Zap = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-        </svg>
-      );
-
-      const Shield = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-        </svg>
-      );
-
-      const Clock = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-          <circle cx="12" cy="12" r="10"></circle>
-          <polyline points="12 6 12 12 16 14"></polyline>
-        </svg>
-      );
-
-      const TrendingUp = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-          <polyline points="17 6 23 6 23 12"></polyline>
-        </svg>
-      );
-
-      const CheckCircle2 = ({ size = 24, className = "" }) => (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-          <polyline points="22 4 12 14.01 9 11.01"></polyline>
         </svg>
       );
 
@@ -139,26 +125,18 @@
         const ref = useRef(null);
 
         useEffect(() => {
-          const observer = new IntersectionObserver(
-            ([entry]) => {
-              if (entry.isIntersecting) {
-                setIsVisible(true);
-                observer.unobserve(ref.current);
-              }
-            },
-            { threshold: 0.1 }
-          );
+          const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+              observer.unobserve(ref.current);
+            }
+          }, { threshold: 0.1 });
           if (ref.current) observer.observe(ref.current);
           return () => observer.disconnect();
         }, []);
 
         return (
-          <div
-            ref={ref}
-            className={`transition-all duration-1000 ease-out transform ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-            }`}
-          >
+          <div ref={ref} className={`transition-all duration-1000 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             {children}
           </div>
         );
@@ -206,18 +184,16 @@
 
         return (
           <div className="min-h-screen">
-            {/* Navigation */}
             <nav className={`fixed w-full z-[100] px-8 py-8 transition-all duration-700 ${scrolled ? 'bg-white/95 backdrop-blur-md py-5 border-b border-zinc-100' : ''}`}>
               <div className="max-w-[1600px] mx-auto flex justify-between items-center">
                 <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-                  <span className="text-xl font-black uppercase tracking-tighter">ZERO BRIDGE<span className="text-red-600">.</span></span>
+                  <span className="text-xl font-[900] uppercase tracking-tighter">ZERO BRIDGE<span className="text-red-600">.</span></span>
                   <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-bold mt-0.5">GLOBAL CONTENT INFRASTRUCTURE</span>
                 </div>
                 <button onClick={() => setIsModalOpen(true)} className="bg-black text-white px-7 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold hover:bg-red-600 transition-all">INITIATE</button>
               </div>
             </nav>
 
-            {/* Hero Section */}
             <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-20 overflow-hidden bg-white">
               <div className="absolute inset-0 z-0 bg-white">
                 <video ref={videoRef} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-[0.9] pointer-events-none">
@@ -237,8 +213,8 @@
                   <div className="flex flex-col space-y-2 mt-4">
                     <div className="flex items-center space-x-3">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-600/80" />
-                      {/* ROI Statement: Bold Pure Black, 7% smaller */}
-                      <p className="text-[0.86rem] md:text-[0.97rem] font-bold tracking-tight text-black">
+                      {/* ROI Statement: Size increased by 8% (0.93rem mobile / 1.05rem desktop), Bold, Pure Black */}
+                      <p className="text-[0.93rem] md:text-[1.05rem] font-bold tracking-tight text-black">
                         live production hubs delivering 60%+ savings for clients
                       </p>
                     </div>
@@ -247,13 +223,12 @@
               </div>
             </section>
 
-            {/* Mission Section */}
             <section className="py-48 px-8 bg-white border-t border-zinc-50 text-center">
               <Reveal>
                 <div className="max-w-[1200px] mx-auto space-y-20">
                   <h2 className="unified-heading text-zinc-200">the <span className="text-black">mission.</span></h2>
                   <div className="space-y-16 max-w-5xl mx-auto text-left md:text-center">
-                    <p className="text-3xl md:text-5xl font-bold tracking-tighter leading-[0.95] text-black">
+                    <p className="text-3xl md:text-6xl font-black tracking-tighter leading-[0.85] text-black">
                       always-on content operations <br className="hidden md:block" /> for brands that publish daily.
                     </p>
                     <div className="h-px w-20 bg-red-600 mx-auto opacity-30" />
@@ -271,7 +246,6 @@
                 <img 
                   src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" 
                   className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale contrast-125"
-                  alt="Infrastructure"
                 />
                 <div className="absolute inset-0 engine-vignette" />
               </div>
@@ -299,45 +273,12 @@
               </div>
             </section>
 
-            {/* Process Section */}
-            <section className="py-48 bg-white border-y border-zinc-50 px-8">
-              <div className="max-w-[1400px] mx-auto">
-                <Reveal>
-                  <div className="flex flex-col md:flex-row justify-between items-end mb-24 border-b border-zinc-100 pb-12">
-                    <h3 className="unified-heading">the <span className="text-red-600">process.</span></h3>
-                    <p className="text-[10px] tracking-[0.4em] text-zinc-400 font-bold uppercase mb-4">from audit to automation</p>
-                  </div>
-                </Reveal>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
-                  {[
-                    { phase: "01", title: "the content audit", desc: "we analyze your current output bottlenecks and identify where our global hubs can inject the most velocity.", icon: <Shield size={32} className="text-red-600 mb-4" /> },
-                    { phase: "02", title: "dedicated pod setup", desc: "we build a custom creative pod in our india hubs tailored to your brand’s specific style, voice, and technical requirements.", icon: <Zap size={32} className="text-red-600 mb-4" /> },
-                    { phase: "03", title: "the relay", desc: "implementation of the timezone advantage. your us/eu team finishes their day; our india team picks up the baton instantly.", icon: <Clock size={32} className="text-red-600 mb-4" /> },
-                    { phase: "04", title: "perpetual scale", desc: "continuous optimization of workflows to increase output without increasing your overhead.", icon: <TrendingUp size={32} className="text-red-600 mb-4" /> }
-                  ].map((step, i) => (
-                    <Reveal key={i}>
-                      <div className="space-y-6">
-                        <div className="flex items-center justify-between">
-                          <span className="text-red-600 font-bold text-[10px] tracking-widest uppercase">phase {step.phase}</span>
-                          {step.icon}
-                        </div>
-                        <div className="h-px bg-zinc-100 w-full mb-6"></div>
-                        <h4 className="text-2xl font-bold tracking-tighter">{step.title}</h4>
-                        <p className="text-zinc-500 standard-body !text-base">{step.desc}</p>
-                      </div>
-                    </Reveal>
-                  ))}
-                </div>
-              </div>
-            </section>
-
             {/* Global Relay */}
             <section className="relative py-48 px-8 bg-zinc-50 border-b border-zinc-100 overflow-hidden">
               <div className="absolute inset-0 z-0">
                 <img 
                   src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" 
                   className="w-full h-full object-cover brightness-90 contrast-110" 
-                  alt="Global Network" 
                 />
                 <div className="absolute inset-0 relay-vignette" />
               </div>
@@ -359,7 +300,7 @@
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32 max-w-4xl mx-auto text-center">
                     {[ {l: '24/7', s: 'UPTIME'}, {l: '60%', s: 'COST SAVING'}, {l: '365', s: 'DAYS A YEAR'} ].map((m, i) => (
                       <div key={i} className="flex flex-col items-center p-8 border border-zinc-200 rounded-[30px] bg-white transition-transform hover:scale-105 duration-500">
-                        <span className="text-4xl font-bold mb-1 tracking-tighter">{m.l}</span>
+                        <span className="text-4xl font-black mb-1 tracking-tighter">{m.l}</span>
                         <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">{m.s}</span>
                       </div>
                     ))}
@@ -368,7 +309,6 @@
               </div>
             </section>
 
-            {/* Live Status Section */}
             <section className="pt-24 pb-0 bg-white px-8 border-t border-zinc-50">
               <Reveal>
                 <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center border-y border-zinc-100 py-12">
@@ -378,7 +318,7 @@
                   </div>
                   <div className="text-center md:text-right">
                     <span className="text-[10px] font-bold tracking-[0.4em] text-zinc-400 uppercase block mb-2">GLOBAL TIME</span>
-                    <span className="text-4xl font-bold tracking-tighter">
+                    <span className="text-4xl font-black tracking-tighter text-black">
                       {currentTime.toLocaleTimeString('en-US', { hour12: false, timeZone: 'UTC' })} 
                       <span className="text-zinc-300 text-xl font-medium ml-2">UTC</span>
                     </span>
@@ -387,32 +327,30 @@
               </Reveal>
             </section>
 
-            {/* Brand Section */}
             <section className="pt-8 pb-48 px-8 bg-white overflow-hidden text-center">
               <Reveal>
                 <h3 className="unified-heading mb-32">we work with the top <br />brands and <span className="text-red-600">publishers.</span></h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center max-w-[1400px] mx-auto">
                   <div className="brand-text flex space-x-0.5 justify-center scale-110">
-                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div>
-                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div>
-                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div>
+                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-[900] text-[10px]">b</div>
+                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-[900] text-[10px]">b</div>
+                    <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-[900] text-[10px]">c</div>
                   </div>
                   {['shell', 'discovery', 'booking.com', 'itv', 'copa90', 'zomato', 'carlsberg', 'future plc', 'lost in', 'bigger bang', 'swns'].map((b, i) => (
-                    <span key={i} className="brand-text font-bold text-2xl tracking-tight uppercase">{b}</span>
+                    <span key={i} className="brand-text font-black text-2xl tracking-tight uppercase text-black">{b}</span>
                   ))}
-                  <div className="brand-text border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto">re:</div>
-                  <div className="brand-text flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center">
+                  <div className="brand-text border-2 border-black px-3 py-1 font-black text-xl uppercase inline-block mx-auto text-black">re:</div>
+                  <div className="brand-text flex items-center space-x-1 font-black text-base tracking-widest uppercase justify-center text-black">
                     <span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span>
                   </div>
-                  <span className="brand-text font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
+                  <span className="brand-text font-black text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
                 </div>
               </Reveal>
             </section>
 
-            {/* Footer */}
             <footer className="py-64 px-8 text-center bg-black text-white">
               <Reveal>
-                <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline underline-offset-[20px] decoration-red-600/20">is zero.</span></h2>
+                <h2 className="unified-heading mb-20 text-white">the distance <br /><span className="text-red-600 underline underline-offset-[20px] decoration-red-600/20">is zero.</span></h2>
                 <button onClick={() => setIsModalOpen(true)} className="group flex items-center space-x-6 mx-auto text-[10px] tracking-[0.6em] font-bold border border-zinc-800 px-16 py-8 rounded-full hover:bg-white hover:text-black transition-all uppercase">
                   <span>INITIATE SIGNAL</span><ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                 </button>
@@ -422,23 +360,22 @@
               </Reveal>
             </footer>
 
-            {/* Modal */}
             {isModalOpen && (
               <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
                 <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black transition-all"><X size={32} /></button>
                 <div className="max-w-xl w-full space-y-12 text-center md:text-left">
-                  <h2 className="text-5xl font-bold tracking-tighter">initiate.</h2>
+                  <h2 className="text-5xl font-black tracking-tighter text-black">initiate.</h2>
                   {isSubmitted ? (
                     <div className="py-20 text-center space-y-4">
-                      <CheckCircle2 size={64} className="mx-auto text-green-500 mb-6" />
-                      <p className="text-2xl font-bold uppercase tracking-tight">Signal Received.</p>
+                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mx-auto text-green-500 mb-6"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      <p className="text-2xl font-bold uppercase tracking-tight text-black">Signal Received.</p>
                       <p className="text-zinc-500">we will bridge the gap shortly.</p>
                     </div>
                   ) : (
                     <form className="space-y-8" onSubmit={handleFormSubmit}>
-                      <input required type="text" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="enter name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-                      <input required type="email" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                      <textarea required className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body resize-none" rows="3" placeholder="how can we bridge the gap?" value={formData.query} onChange={(e) => setFormData({...formData, query: e.target.value})} />
+                      <input required type="text" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body text-black" placeholder="enter name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                      <input required type="email" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body text-black" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                      <textarea required className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body resize-none text-black" rows="3" placeholder="how can we bridge the gap?" value={formData.query} onChange={(e) => setFormData({...formData, query: e.target.value})} />
                       <button type="submit" className="w-full bg-black text-white py-6 rounded-full font-bold uppercase tracking-[0.4em] text-xs hover:bg-red-600 transition-all">send the signal</button>
                     </form>
                   )}
