@@ -10,13 +10,12 @@ import {
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V6.3
+ * ZERO BRIDGE WEBSITE - PRODUCTION V6.3.1
  * Project: ZB website build
- * - Layout: Clean, edge-to-edge cinematic feel (curve removed).
- * - Hero Typography: "WHERE STORYTELLING MEETS SCALE" as the anchor.
- * - Sub-header: "live production hubs..." in bold, pure black, and 7% smaller.
- * - Visual Depth: Full restoration of all background video and image layers.
- * - Brand Section: Reverted to high-end minimalist styled text.
+ * - Stability Fix: Adhering to strict React Contract (App default export).
+ * - Hero Typography: "WHERE STORYTELLING MEETS SCALE" as the primary hook.
+ * - Sub-header: ROI statement in Bold Pure Black at a refined scale.
+ * - Restored Assets: Hero video playback and all section background layers are active.
  */
 
 const Reveal = ({ children }) => {
@@ -57,7 +56,7 @@ const App = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const videoRef = useRef(null);
 
-  // Set Favicon & Title for professional tab look
+  // Dynamic Tab Control
   useEffect(() => {
     const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
     link.type = 'image/svg+xml';
@@ -197,7 +196,7 @@ const App = () => {
               { label: 'EXECUTE', text: 'serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats.' }
             ].map((step, i) => (
               <Reveal key={i}>
-                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-white/10 group text-center flex flex-col items-center">
+                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-zinc-800 group text-center flex flex-col items-center">
                   <span className="text-red-600 font-bold text-[10px] mb-2 block tracking-widest uppercase">0{i+1}</span>
                   <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step.label}</span>
                   <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">{step.text}</p>
