@@ -1,22 +1,22 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { createRoot } from 'react-dom/client';
 import { 
   ArrowRight,
   X,
   Zap,
   Shield,
   Clock,
-  TrendingUp
+  TrendingUp,
+  CheckCircle2
 } from 'lucide-react';
 
 /**
- * ZERO BRIDGE WEBSITE - PRODUCTION V4.0 (STABLE BUILD)
- * - Engine: Reverted to solid black layout (removed background image).
- * - Navigation: Ultra-minimalist (Only "INITIATE").
- * - Phase 03: Named "the relay".
- * - Global Relay: 3-line balanced layout for architectural symmetry.
- * - Footer: Red city labels at 12.5px scale.
- * - Mounting: Safe-mount logic for GitHub/Vercel compatibility.
+ * ZERO BRIDGE WEBSITE - PRODUCTION V6.3
+ * Project: ZB website build
+ * - Layout: Clean, edge-to-edge cinematic feel (curve removed).
+ * - Hero Typography: "WHERE STORYTELLING MEETS SCALE" as the anchor.
+ * - Sub-header: "live production hubs..." in bold, pure black, and 7% smaller.
+ * - Visual Depth: Full restoration of all background video and image layers.
+ * - Brand Section: Reverted to high-end minimalist styled text.
  */
 
 const Reveal = ({ children }) => {
@@ -53,8 +53,19 @@ const App = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
-  const videoRef = useRef(null);
   const [formData, setFormData] = useState({ name: '', email: '', query: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const videoRef = useRef(null);
+
+  // Set Favicon & Title for professional tab look
+  useEffect(() => {
+    const link = document.querySelector("link[rel~='icon']") || document.createElement('link');
+    link.type = 'image/svg+xml';
+    link.rel = 'icon';
+    link.href = 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23DC2626%22/></svg>';
+    document.getElementsByTagName('head')[0].appendChild(link);
+    document.title = "Zero Bridge | Media Infrastructure";
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
@@ -68,13 +79,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const startVideo = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = true;
-        videoRef.current.play().catch(() => {});
-      }
-    };
-    startVideo();
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch(() => {});
+    }
   }, []);
 
   const handleFormSubmit = (e) => {
@@ -82,6 +90,13 @@ const App = () => {
     const subject = `Inquiry: ${formData.name}`;
     const body = `Name: ${formData.name}%0D%0AEmail: ${formData.email}%0D%0A%0D%0AQuery: ${formData.query}`;
     window.location.href = `mailto:aamir@zerobridge.net?subject=${subject}&body=${body}`;
+    
+    setIsSubmitted(true);
+    setTimeout(() => {
+      setIsModalOpen(false);
+      setIsSubmitted(false);
+      setFormData({ name: '', email: '', query: '' });
+    }, 2500);
   };
 
   return (
@@ -89,71 +104,100 @@ const App = () => {
       <style dangerouslySetInnerHTML={{ __html: `
         @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&display=swap');
         body { margin: 0; background-color: #FFFFFF; font-family: 'Space Grotesk', sans-serif; }
-        .unified-heading { font-size: clamp(2.5rem, 8vw, 7rem); font-weight: 700; line-height: 0.95; letter-spacing: -0.04em; }
+        .unified-heading { font-size: clamp(3rem, 10vw, 8rem); font-weight: 700; line-height: 0.9; letter-spacing: -0.05em; }
         .standard-body { font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.4; letter-spacing: -0.02em; }
         .relay-blurb { font-size: clamp(1.3rem, 2.5vw, 1.9rem); line-height: 1.35; letter-spacing: -0.02em; }
         .video-overlay { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,1) 100%); }
+        .engine-vignette { background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%); }
         .relay-vignette { background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(255,255,255,0.7) 60%, rgba(255,255,255,1) 100%); }
         .pulse-dot { animation: pulse 2s infinite; }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(22, 163, 74, 0); } 100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); } }
-        .brand-logo { transition: all 0.4s ease; opacity: 0.5; filter: grayscale(1); cursor: default; }
-        .brand-logo:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
+        .brand-text { transition: all 0.4s ease; opacity: 0.4; filter: grayscale(1); cursor: default; }
+        .brand-text:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
       ` }} />
-
-      <div className="film-grain" />
 
       {/* Navigation */}
       <nav className={`fixed w-full z-[100] px-8 py-8 transition-all duration-700 ${scrolled ? 'bg-white/95 backdrop-blur-md py-5 border-b border-zinc-100' : ''}`}>
         <div className="max-w-[1600px] mx-auto flex justify-between items-center">
           <div className="flex flex-col cursor-pointer" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
             <span className="text-xl font-black uppercase tracking-tighter">ZERO BRIDGE<span className="text-red-600">.</span></span>
-            <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-bold leading-none mt-0.5">GLOBAL CONTENT INFRASTRUCTURE</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-zinc-400 font-bold mt-0.5">GLOBAL CONTENT INFRASTRUCTURE</span>
           </div>
           <button onClick={() => setIsModalOpen(true)} className="bg-black text-white px-7 py-3 rounded-full text-[10px] uppercase tracking-widest font-bold hover:bg-red-600 transition-all">INITIATE</button>
         </div>
       </nav>
 
-      {/* Hero */}
-      <section className="relative h-screen flex flex-col justify-center items-center px-6 pt-40 overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative h-screen flex flex-col justify-center items-start px-8 md:px-20 overflow-hidden bg-white">
         <div className="absolute inset-0 z-0 bg-white">
           <video ref={videoRef} autoPlay muted loop playsInline className="w-full h-full object-cover opacity-[0.9] pointer-events-none">
             <source src="https://cdn.jsdelivr.net/gh/aamir-bash/assets/hero.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 video-overlay" />
         </div>
-        <div className="relative z-10 text-center max-w-[95vw]">
-          <h1 className="unified-heading mb-12">always-on content <br /> operations for brands <br /> that <span className="text-red-600">publish daily</span></h1>
+        
+        <div className="relative z-10 max-w-full lg:max-w-[1400px]">
+          <Reveal>
+            <h1 className="unified-heading mb-8">
+              where <br />
+              storytelling <br />
+              meets <span className="text-red-600">scale.</span>
+            </h1>
+            
+            <div className="flex flex-col space-y-2 mt-4">
+              <div className="flex items-center space-x-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-600/80" />
+                <p className="text-[0.86rem] md:text-[0.97rem] font-bold tracking-tight text-black">
+                  live production hubs delivering 60%+ savings for clients
+                </p>
+              </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Mission */}
-      <section className="py-48 px-8 bg-white border-t border-zinc-50 flex flex-col items-center text-center">
+      {/* Mission Section */}
+      <section className="py-48 px-8 bg-white border-t border-zinc-50 text-center">
         <Reveal>
           <div className="max-w-[1200px] mx-auto space-y-20">
-            <h2 className="unified-heading">scale <span className="text-red-600">without stretching.</span></h2>
-            <div className="space-y-16 max-w-5xl mx-auto">
-              <p className="text-2xl md:text-4xl font-bold tracking-tighter text-black leading-tight">zero bridge is an end-to-end media studio helping publishers solve the content velocity problem.</p>
-              <p className="text-2xl md:text-4xl font-bold tracking-tighter text-black leading-tight">we are the global content operations partner for the world’s most ambitious publishers and brands. we build the systems, teams and workflows that turn great ideas into consistent, daily content output without any bottlenecks or excuses.</p>
+            <h2 className="unified-heading text-zinc-200">the <span className="text-black">mission.</span></h2>
+            <div className="space-y-16 max-w-5xl mx-auto text-left md:text-center">
+              <p className="text-3xl md:text-5xl font-bold tracking-tighter leading-[0.95] text-black">
+                always-on content operations <br className="hidden md:block" /> for brands that publish daily.
+              </p>
+              <div className="h-px w-20 bg-red-600 mx-auto opacity-30" />
+              <p className="text-2xl md:text-4xl font-bold tracking-tighter leading-tight text-zinc-400">
+                zero bridge is an end-to-end media studio helping publishers solve the content velocity problem. we build the systems and workflows that turn great ideas into consistent content output without bottlenecks.
+              </p>
             </div>
           </div>
         </Reveal>
       </section>
 
-      {/* Engine - Clean Black Reverted Layout */}
-      <section className="bg-black text-white py-40 px-8 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto text-center">
+      {/* Engine Section */}
+      <section className="relative bg-black text-white py-40 px-8 overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=2070&auto=format&fit=crop" 
+            className="w-full h-full object-cover opacity-30 mix-blend-luminosity grayscale contrast-125"
+            alt="Infrastructure"
+          />
+          <div className="absolute inset-0 engine-vignette" />
+        </div>
+        
+        <div className="relative z-10 max-w-[1400px] mx-auto text-center">
           <Reveal>
             <span className="text-[10px] tracking-[0.4em] text-red-600 font-bold mb-8 uppercase block">WHAT WE DO</span>
             <h3 className="unified-heading mb-32">our engine<span className="text-red-600">.</span></h3>
           </Reveal>
-          <div className="grid lg:grid-cols-3 border-t border-zinc-800">
+          <div className="grid lg:grid-cols-3 border-t border-white/10">
             {[
               { label: 'CONNECT', text: 'we integrate publishers and media companies with global creatives and dedicated teams to produce and package content at optimised costs.' },
               { label: 'EMPOWER', text: 'our world-class platform-agnostic production engine enables brands to scale new heights powered by talent, technology and experience.' },
               { label: 'EXECUTE', text: 'serving as your extended team, our operations handle the heavy lifting, enabling you to produce and publish high volume content daily across diverse formats.' }
             ].map((step, i) => (
               <Reveal key={i}>
-                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-zinc-800 group text-center flex flex-col items-center">
+                <div className="py-24 lg:px-12 border-b lg:border-b-0 lg:border-r border-white/10 group text-center flex flex-col items-center">
                   <span className="text-red-600 font-bold text-[10px] mb-2 block tracking-widest uppercase">0{i+1}</span>
                   <span className="text-white/40 font-bold text-[10px] mb-8 block tracking-widest uppercase">{step.label}</span>
                   <p className="standard-body font-bold group-hover:text-red-600 transition-colors max-w-sm">{step.text}</p>
@@ -164,7 +208,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Process */}
+      {/* Process Section */}
       <section className="py-48 bg-white border-y border-zinc-50 px-8">
         <div className="max-w-[1400px] mx-auto">
           <Reveal>
@@ -197,11 +241,16 @@ const App = () => {
       </section>
 
       {/* Global Relay */}
-      <section className="relative py-48 px-8 bg-white border-b border-zinc-50 overflow-hidden">
+      <section className="relative py-48 px-8 bg-zinc-50 border-b border-zinc-100 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" className="w-full h-full object-cover brightness-90 contrast-110" alt="Global Network" />
+          <img 
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop" 
+            className="w-full h-full object-cover brightness-90 contrast-110" 
+            alt="Global Network" 
+          />
           <div className="absolute inset-0 relay-vignette" />
         </div>
+        
         <div className="relative z-10 max-w-[1400px] mx-auto text-center">
           <Reveal>
             <div className="space-y-16">
@@ -209,8 +258,8 @@ const App = () => {
               <div className="max-w-5xl mx-auto">
                 <p className="relay-blurb font-bold text-black max-w-5xl mx-auto">
                   our hubs across india act as a 24/7 extension of your team. <br />
-                  we leverage the timezone advantage, our vast talent pool, <br />
-                  technology and tools for a seamless, agile workflow.
+                  we leverage the timezone advantage and vast talent pool <br />
+                  for a seamless, agile daily workflow.
                 </p>
               </div>
             </div>
@@ -218,7 +267,7 @@ const App = () => {
           <Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-32 max-w-4xl mx-auto text-center">
               {[ {l: '24/7', s: 'UPTIME'}, {l: '60%', s: 'COST SAVING'}, {l: '365', s: 'DAYS A YEAR'} ].map((m, i) => (
-                <div key={i} className="flex flex-col items-center p-8 border border-zinc-100 rounded-[30px] bg-white/80 backdrop-blur-xl transition-transform hover:scale-105 duration-500">
+                <div key={i} className="flex flex-col items-center p-8 border border-zinc-200 rounded-[30px] bg-white transition-transform hover:scale-105 duration-500">
                   <span className="text-4xl font-bold mb-1 tracking-tighter">{m.l}</span>
                   <span className="text-[8px] tracking-[0.4em] text-zinc-500 font-bold uppercase">{m.s}</span>
                 </div>
@@ -228,7 +277,7 @@ const App = () => {
         </div>
       </section>
 
-      {/* Live Status */}
+      {/* Live Status Section */}
       <section className="pt-24 pb-0 bg-white px-8">
         <Reveal>
           <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center border-y border-zinc-100 py-12">
@@ -238,7 +287,10 @@ const App = () => {
             </div>
             <div className="text-center md:text-right">
               <span className="text-[10px] font-bold tracking-[0.4em] text-zinc-400 uppercase block mb-2">GLOBAL TIME</span>
-              <span className="text-4xl font-bold tracking-tighter">{currentTime.toLocaleTimeString('en-US', { hour12: false })} <span className="text-zinc-300 text-xl font-medium">UTC</span></span>
+              <span className="text-4xl font-bold tracking-tighter">
+                {currentTime.toLocaleTimeString('en-US', { hour12: false, timeZone: 'UTC' })} 
+                <span className="text-zinc-300 text-xl font-medium ml-2">UTC</span>
+              </span>
             </div>
           </div>
         </Reveal>
@@ -249,21 +301,27 @@ const App = () => {
         <Reveal>
           <h3 className="unified-heading mb-32">we work with the top <br />brands and <span className="text-red-600">publishers.</span></h3>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-y-24 gap-x-12 items-center max-w-[1400px] mx-auto">
-            <div className="brand-logo flex space-x-0.5 justify-center scale-110"><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div><div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div></div>
+            <div className="brand-text flex space-x-0.5 justify-center scale-110">
+              <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div>
+              <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">b</div>
+              <div className="w-6 h-6 bg-black text-white flex items-center justify-center font-bold text-[10px]">c</div>
+            </div>
             {['shell', 'discovery', 'booking.com', 'itv', 'copa90', 'zomato', 'carlsberg', 'future plc', 'lost in', 'bigger bang', 'swns'].map((b, i) => (
-              <span key={i} className="brand-logo font-bold text-xl tracking-tight uppercase cursor-default">{b}</span>
+              <span key={i} className="brand-text font-bold text-2xl tracking-tight uppercase">{b}</span>
             ))}
-            <div className="brand-logo border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto cursor-default">re:</div>
-            <div className="brand-logo flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center cursor-default"><span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span></div>
-            <span className="brand-logo font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase cursor-default">news uk</span>
+            <div className="brand-text border-2 border-black px-3 py-1 font-bold text-xl uppercase inline-block mx-auto">re:</div>
+            <div className="brand-text flex items-center space-x-1 font-bold text-base tracking-widest uppercase justify-center">
+              <span>sbx</span><span className="w-px h-6 bg-zinc-300"></span><span>cars</span>
+            </div>
+            <span className="brand-text font-bold text-xl text-zinc-400 tracking-[0.2em] uppercase">news uk</span>
           </div>
         </Reveal>
       </section>
 
-      {/* Footer - Final Red Accents */}
+      {/* Footer */}
       <footer className="py-64 px-8 text-center bg-black text-white">
         <Reveal>
-          <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline decoration-red-600/20 underline-offset-[20px]">is zero.</span></h2>
+          <h2 className="unified-heading mb-20">the distance <br /><span className="text-red-600 underline underline-offset-[20px] decoration-red-600/20">is zero.</span></h2>
           <button onClick={() => setIsModalOpen(true)} className="group flex items-center space-x-6 mx-auto text-[10px] tracking-[0.6em] font-bold border border-zinc-800 px-16 py-8 rounded-full hover:bg-white hover:text-black transition-all uppercase">
             <span>INITIATE SIGNAL</span><ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
           </button>
@@ -276,30 +334,28 @@ const App = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-white/95 backdrop-blur-xl">
-          <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black"><X size={32} /></button>
+          <button onClick={() => setIsModalOpen(false)} className="absolute top-12 right-12 text-zinc-400 hover:text-black transition-all"><X size={32} /></button>
           <div className="max-w-xl w-full space-y-12">
             <h2 className="text-5xl font-bold tracking-tighter">initiate.</h2>
-            <form className="space-y-8" onSubmit={handleFormSubmit}>
-              <input required type="text" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="enter name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
-              <input required type="email" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-              <textarea required className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body resize-none" rows="3" placeholder="how can we bridge the gap?" value={formData.query} onChange={(e) => setFormData({...formData, query: e.target.value})} />
-              <button type="submit" className="w-full bg-black text-white py-6 rounded-full font-bold uppercase tracking-[0.4em] text-xs hover:bg-red-600 transition-all">send the signal</button>
-            </form>
+            {isSubmitted ? (
+              <div className="py-20 text-center space-y-4">
+                <CheckCircle2 size={64} className="mx-auto text-green-500 mb-6" />
+                <p className="text-2xl font-bold uppercase tracking-tight">Signal Received.</p>
+                <p className="text-zinc-500">we will bridge the gap shortly.</p>
+              </div>
+            ) : (
+              <form className="space-y-8" onSubmit={handleFormSubmit}>
+                <input required type="text" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="enter name" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} />
+                <input required type="email" className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body" placeholder="your@email.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
+                <textarea required className="w-full bg-transparent border-b border-zinc-200 py-4 focus:border-black outline-none standard-body resize-none" rows="3" placeholder="how can we bridge the gap?" value={formData.query} onChange={(e) => setFormData({...formData, query: e.target.value})} />
+                <button type="submit" className="w-full bg-black text-white py-6 rounded-full font-bold uppercase tracking-[0.4em] text-xs hover:bg-red-600 transition-all">send the signal</button>
+              </form>
+            )}
           </div>
         </div>
       )}
     </div>
   );
 };
-
-// --- UNIVERSAL MOUNTING BLOCK ---
-// This handles both the Chat Preview and your live GitHub/Vercel website environment.
-if (typeof document !== 'undefined') {
-  const container = document.getElementById('root');
-  if (container && container.innerHTML === "") {
-    const root = createRoot(container);
-    root.render(<App />);
-  }
-}
 
 export default App;
