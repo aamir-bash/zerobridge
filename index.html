@@ -1,11 +1,3 @@
-If you are trying to open the file by double-clicking it directly from your computer (using the `file://` protocol), the site will show up completely blank.
-
-This happens because browsers block the security feature (`IntersectionObserver`) and the CDN packages from running locally unless they are served from an active web server environment.
-
-To fix this immediately without changing your workflow, I have rewritten the script below to use standard, browser-native JavaScript. It removes the heavy dependencies (React and Babel) so that it **will open perfectly when you double-click the file**.
-
-Copy and paste this code into your file instead:
-
 ```html
 <!doctype html>
 <html lang="en">
